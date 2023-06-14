@@ -26,14 +26,14 @@
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
   <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <!-- 配置 File -> Settings -> Tools -->
+    <projectConfigurable groupId="tools" displayName="My Test Config" id="test.id"
+                         instance="com.example.calculatetime.SettingFactory"/>
 
+    <!-- 窗体 (IDEA 界面右侧) -->
+    <toolWindow id="Read-Book" secondary="false" anchor="right"
+                factoryClass="com.example.calculatetime.ReadFactory"/>
   </extensions>
 
-  <actions>
-    <!-- Add your actions here -->
-    <action id="MyAction" class="com.example.calculatetime.MyAction" text="MyAction" description="MyAction">
-      <add-to-group group-id="FileMenu" anchor="first"/>
-    </action>
-
-  </actions>
 </idea-plugin>
