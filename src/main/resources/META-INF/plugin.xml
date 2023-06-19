@@ -34,6 +34,13 @@
     <!-- 窗体 (IDEA 界面右侧) -->
     <toolWindow id="Read-Book" secondary="false" anchor="right"
                 factoryClass="com.example.calculatetime.ReadFactory"/>
+
   </extensions>
+  <actions>
+    <action id="CodeGenerateAction" class="com.example.calculatetime.CalculateTimeAction"
+            text="ORMCodeGenerate - 小傅哥" description="Code Generate ORM">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+    </action>
+  </actions>
 
 </idea-plugin>
