@@ -1,22 +1,17 @@
 package com.example.calculatetime;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.psi.PsiFile;
+import com.intellij.execution.Executor;
+import com.intellij.execution.configurations.JavaParameters;
+import com.intellij.execution.configurations.RunProfile;
+import com.intellij.execution.runners.JavaProgramPatcher;
 
-public class CalculateTimeAction extends JavaProgramPatcher  {
+
+
+public class CalculateTimeAction extends JavaProgramPatcher {
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
-        Project project = e.getData(PlatformDataKeys.PROJECT);
-        PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-        String classPath = psiFile.getVirtualFile().getPath();
+    public void patchJavaParameters(Executor executor, RunProfile configuration, JavaParameters javaParameters) {
 
-        Messages.showMessageDialog(project, "guide-idea-plugin-create-project-by-gradle: " + classPath, "Hi IDEA Plugin", Messages.getInformationIcon());
     }
 
 }
