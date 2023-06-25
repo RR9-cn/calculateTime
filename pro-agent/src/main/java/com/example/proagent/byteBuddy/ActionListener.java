@@ -1,4 +1,4 @@
-package com.example.proAgent.byteBuddy;
+package com.example.proagent.byteBuddy;
 
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.description.type.TypeDescription;

@@ -1,4 +1,4 @@
-package com.example.proAgent.byteBuddy;
+package com.example.proagent.byteBuddy;
 
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
