@@ -33,7 +33,7 @@ tasks {
 
   jar{
     manifest{
-      attributes(mapOf("Main-Class" to "com.example.javaAgent.ApiTest"))
+      attributes(mapOf("Main-Class" to "com.example.proAgent.byteBuddy.javaAgent.ApiTest"))
       attributes(mapOf("Premain-Class" to "com.example.javaAgent.byteBuddy.JavaAgentByBuddy"))
     }
     from("src/main/resources/META-INF/MANIFEST.MF")
