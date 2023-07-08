@@ -43,7 +43,6 @@ public class PerRun extends JavaProgramPatcher {
         }
 
         String agentCoreJarPath = PluginUtil.getAgentCoreJarPath();
-
         if (StrUtil.isBlank(agentCoreJarPath)) {
             return;
         }

@@ -1,5 +1,6 @@
 package com.example.proagent.byteBuddy;
 
+import net.bytebuddy.asm.Advice;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.SuperCall;
@@ -14,14 +15,14 @@ import java.util.concurrent.Callable;
  */
 public class MethodCostTime {
 
-    @RuntimeType
-    public static Object intercept(@Origin Method method, @SuperCall Callable<?> callable) throws Exception {
-        long start = System.currentTimeMillis();
-        try {
-            // 原有函数执行
-            return callable.call();
-        } finally {
-            System.out.println(method + " 方法耗时： " + (System.currentTimeMillis() - start) + "ms");
-        }
+    @Advice.OnMethodEnter
+    static long enter() {
+        return System.nanoTime();
+    }
+
+    @Advice.OnMethodExit
+    static void exit(@Advice.Enter long start, @Advice.Origin String method) {
+        long end = System.nanoTime();
+        System.out.println(method + " took " + (end - start) + " nanoseconds");
     }
 }

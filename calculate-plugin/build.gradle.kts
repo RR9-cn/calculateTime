@@ -1,3 +1,4 @@
+println("I'm now compiling with gradle " + project.gradle.gradleVersion);
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.12.0"
@@ -49,7 +50,7 @@ tasks {
 
     jar{
         manifest{
-            attributes(mapOf("Premain-Class" to "com.example.proAgent.byteBuddy.JavaAgentByBuddy"))
+            attributes(mapOf("Premain-Class" to "com.example.calculateplugin.agent.JavaAgentByBuddy"))
         }
     }
 }

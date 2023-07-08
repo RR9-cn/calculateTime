@@ -19,8 +19,8 @@ intellij {
 }
 
 dependencies{
-    implementation("net.bytebuddy:byte-buddy:1.14.5")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.5")
+    implementation("net.bytebuddy:byte-buddy:1.12.6")
+    implementation("net.bytebuddy:byte-buddy-agent:1.12.6")
     implementation("javassist:javassist:3.12.1.GA")
     implementation("cn.hutool:hutool-all:5.8.18")
 }
@@ -35,7 +35,7 @@ tasks {
 
     jar{
         manifest{
-            attributes(mapOf("Premain-Class" to "com.example.proAgent.byteBuddy.JavaAgentByBuddy"))
+            attributes(mapOf("Premain-Class" to "com.example.proagent.byteBuddy.JavaAgentByBuddy"))
         }
     }
     patchPluginXml {
