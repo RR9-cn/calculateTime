@@ -1,9 +1,14 @@
-package com.example.proagent.byteBuddy;
+package com.example.proagent.byteBuddy.listener;
 
 import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.agent.builder.ResettableClassFileTransformer;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.utility.JavaModule;
+
+import java.lang.instrument.Instrumentation;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author CJJ
@@ -11,13 +16,13 @@ import net.bytebuddy.utility.JavaModule;
  * @date 2023/6/19 14:29
  */
 public class ActionListener implements AgentBuilder.Listener {
+    private Integer NUM = -1;
     @Override
     public void onDiscovery(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
     }
 
     @Override
     public void onTransformation(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module, boolean loaded, DynamicType dynamicType) {
-
     }
 
     @Override
@@ -32,6 +37,5 @@ public class ActionListener implements AgentBuilder.Listener {
 
     @Override
     public void onComplete(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
-
     }
 }
