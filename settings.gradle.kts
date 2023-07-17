@@ -1,3 +1,4 @@
 rootProject.name = "calculateTime"
 include("pro-agent",
-    "calculate-plugin")
+    "calculate-plugin",
+    "calculate-core")

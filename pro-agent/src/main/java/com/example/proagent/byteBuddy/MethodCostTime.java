@@ -24,5 +24,6 @@ public class MethodCostTime {
     static void exit(@Advice.Enter long start, @Advice.Origin String method) {
         long end = System.nanoTime();
         Count.list.add(method + " took " + (end - start) + " nanoseconds");
+        System.out.println(Count.list.size());
     }
 }

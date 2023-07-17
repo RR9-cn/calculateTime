@@ -2,6 +2,7 @@ package com.example.calculateplugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.example.calculateplugin.utils.PluginUtil;
+import com.example.proagent.byteBuddy.utils.MonitorList;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.execution.configurations.ParametersList;
@@ -13,12 +14,16 @@ import com.intellij.openapi.projectRoots.JavaSdkVersion;
 import com.intellij.openapi.projectRoots.Sdk;
 
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author User
  */
 public class PerRun extends JavaProgramPatcher {
-
+    ScheduledExecutorService service = Executors
+            .newSingleThreadScheduledExecutor();
     @Override
     public void patchJavaParameters(Executor executor, RunProfile configuration, JavaParameters javaParameters) {
 
@@ -51,7 +56,11 @@ public class PerRun extends JavaProgramPatcher {
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=testargs");
         vmParametersList.addNotEmptyProperty("guide-idea-plugin-probe.projectId", runConfiguration.getProject().getLocationHash());
-
+        initMonitor();
     }
 
+    private void initMonitor(){
+        System.out.println("开始开启线程池");
+        service.scheduleAtFixedRate(new MonitorList(), 10, 5, TimeUnit.MILLISECONDS);
+    }
 }

@@ -16,7 +16,6 @@ import java.util.Set;
  * @date 2023/6/19 14:29
  */
 public class ActionListener implements AgentBuilder.Listener {
-    private Integer NUM = -1;
     @Override
     public void onDiscovery(String typeName, ClassLoader classLoader, JavaModule module, boolean loaded) {
     }

@@ -9,21 +9,14 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
-dependencies{
-    implementation(project(":pro-agent"))
-    implementation(project(":calculate-core"))
-    implementation("net.bytebuddy:byte-buddy:1.14.5")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.5")
-    implementation("javassist:javassist:3.12.1.GA")
-    implementation("cn.hutool:hutool-all:5.8.18")
-}
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2022.1.4")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf("java"))
+    plugins.set(listOf(/* Plugin Dependencies */))
 }
 
 tasks {
@@ -31,8 +24,8 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "11"
         targetCompatibility = "11"
-        options.encoding = "utf-8"
     }
+
     patchPluginXml {
         sinceBuild.set("221")
         untilBuild.set("231.*")
@@ -46,11 +39,5 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
-    }
-
-    jar{
-        manifest{
-            attributes(mapOf("Premain-Class" to "com.example.calculateplugin.agent.JavaAgentByBuddy"))
-        }
     }
 }
