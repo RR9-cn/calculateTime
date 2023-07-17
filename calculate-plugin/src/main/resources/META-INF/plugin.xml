@@ -30,6 +30,12 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <java.programPatcher implementation="com.example.calculateplugin.PerRun"/>
+        <java.programPatcher implementation="com.example.proagent.byteBuddy.PerRun"/>
+
+        <!-- 窗体 (IDEA 界面右侧) -->
+        <toolWindow id="Read-Book" secondary="false" anchor="right"
+                    factoryClass="com.example.proagent.byteBuddy.action.ReadFactory"/>
     </extensions>
+
+
 </idea-plugin>

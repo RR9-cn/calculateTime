@@ -18,7 +18,8 @@ public class JavaAgentByBuddy {
 
     public static void premain(String agentArgs, Instrumentation inst) {
         new AgentBuilder.Default()
-                .type(ElementMatchers.nameStartsWith("com.aaa"))
+                .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
+                .type(ElementMatchers.nameStartsWith("com"))
                 .transform((builder, type, classLoader, module) ->
                         builder
                                 .method(ElementMatchers.any())
