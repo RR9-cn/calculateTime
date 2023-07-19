@@ -1,5 +1,7 @@
 package com.example.proagent.byteBuddy.action;
 
+import cn.hutool.cache.Cache;
+import cn.hutool.cache.CacheUtil;
 import com.example.proagent.byteBuddy.Count;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -20,10 +22,6 @@ public class ReadFactory implements ToolWindowFactory {
         Content content = contentFactory.createContent(readUI.getPanel(), "", false);
 
         toolWindow.getContentManager().addContent(content);
-
-        Count.timeWindow = readUI;
-
-        System.out.println(Count.list.size());
 
     }
 

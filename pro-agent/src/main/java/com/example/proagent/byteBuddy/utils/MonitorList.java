@@ -10,6 +10,6 @@ import com.example.proagent.byteBuddy.Count;
 public class MonitorList implements Runnable {
     @Override
     public void run() {
-        System.out.println(Count.list.size());
+        System.out.println(Count.fifoCache.get("aaa"));
     }
 }

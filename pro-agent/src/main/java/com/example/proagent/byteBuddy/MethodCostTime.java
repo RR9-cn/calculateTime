@@ -1,9 +1,12 @@
 package com.example.proagent.byteBuddy;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.SuperCall;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
@@ -16,14 +19,14 @@ import java.util.concurrent.Callable;
 public class MethodCostTime {
 
     @Advice.OnMethodEnter
-    static long enter() {
+    public static long enter() {
         return System.nanoTime();
     }
 
     @Advice.OnMethodExit
-    static void exit(@Advice.Enter long start, @Advice.Origin String method) {
+    public static void exit(@Advice.Enter long start, @Advice.Origin String method) {
         long end = System.nanoTime();
-        Count.list.add(method + " took " + (end - start) + " nanoseconds");
-        System.out.println(Count.list.size());
+        System.out.println(method + " took2 " + (end - start) + " nanoseconds");
+        Count.list.add("method + \" took2 \" + (end - start) + \" nanoseconds\"");
     }
 }
