@@ -1,7 +1,7 @@
 package com.example.proagent.byteBuddy;
 
 import cn.hutool.core.util.StrUtil;
-import com.example.proagent.byteBuddy.utils.MonitorList;
+import com.example.proagent.byteBuddy.listener.MonitorList;
 import com.example.proagent.byteBuddy.utils.PluginUtil;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
@@ -13,6 +13,7 @@ import com.intellij.openapi.projectRoots.JavaSdk;
 import com.intellij.openapi.projectRoots.JavaSdkVersion;
 import com.intellij.openapi.projectRoots.Sdk;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -56,10 +57,10 @@ public class PerRun extends JavaProgramPatcher {
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=testargs");
         vmParametersList.addNotEmptyProperty("guide-idea-plugin-probe.projectId", runConfiguration.getProject().getLocationHash());
-        //initMonitor();
-    }
-    private void initMonitor(){
-        System.out.println("开始开启线程池");
-        service.scheduleAtFixedRate(new MonitorList(), 10, 5, TimeUnit.MILLISECONDS);
+        try {
+            new Thread(new MonitorList()).start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -23,7 +23,8 @@ public class JavaAgentByBuddy {
 
     public static void premain(String agentArgs, Instrumentation inst) {
         try {
-            File newFile = new File("D://fileName.txt");
+            String usrHome = System.getProperty("user.home");
+            File newFile = new File(usrHome + "\\timeLog\\fileName.txt");
             if (newFile.createNewFile()) {
                 System.out.println("File created: " + newFile.getName());
             } else {

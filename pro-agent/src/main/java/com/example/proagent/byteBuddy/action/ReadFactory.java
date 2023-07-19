@@ -22,7 +22,6 @@ public class ReadFactory implements ToolWindowFactory {
         Content content = contentFactory.createContent(readUI.getPanel(), "", false);
 
         toolWindow.getContentManager().addContent(content);
-
     }
 
 

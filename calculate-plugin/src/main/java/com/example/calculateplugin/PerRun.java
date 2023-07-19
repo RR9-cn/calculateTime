@@ -2,7 +2,7 @@ package com.example.calculateplugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.example.calculateplugin.utils.PluginUtil;
-import com.example.proagent.byteBuddy.utils.MonitorList;
+import com.example.proagent.byteBuddy.listener.MonitorList;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.execution.configurations.ParametersList;
@@ -56,11 +56,6 @@ public class PerRun extends JavaProgramPatcher {
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=testargs");
         vmParametersList.addNotEmptyProperty("guide-idea-plugin-probe.projectId", runConfiguration.getProject().getLocationHash());
-        initMonitor();
     }
 
-    private void initMonitor(){
-        System.out.println("开始开启线程池");
-        service.scheduleAtFixedRate(new MonitorList(), 10, 5, TimeUnit.MILLISECONDS);
-    }
 }

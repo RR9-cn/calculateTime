@@ -14,10 +14,5 @@ import java.util.Vector;
 public class Count {
 
     public static ObservableList<String> list = new ObservableList(new ListListener());
-
-    public static Cache<String,String> fifoCache = CacheUtil.newFIFOCache(3);
-
     public static TimeWindow readUI;
-
-    public static String a;
 }
