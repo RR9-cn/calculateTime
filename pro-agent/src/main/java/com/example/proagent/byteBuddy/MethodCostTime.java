@@ -5,6 +5,9 @@ import net.bytebuddy.asm.Advice;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 /**
  * @author CJJ
@@ -22,12 +25,9 @@ public class MethodCostTime {
     public static void exit(@Advice.Enter long start, @Advice.Origin String method) {
         long end = System.nanoTime();
         try {
-            FileWriter fileWriter = new FileWriter(SharedInformation.baseDir + SharedInformation.fileName,true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
             System.out.println("开始写入文件");
-            bufferedWriter.write(method + ":" + end);
-            bufferedWriter.newLine();
-            bufferedWriter.close();
+            Files.writeString(path,method + ":" + end + "\n", StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

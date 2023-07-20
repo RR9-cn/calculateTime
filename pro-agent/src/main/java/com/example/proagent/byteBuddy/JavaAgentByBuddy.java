@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.instrument.Instrumentation;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 /**
@@ -21,14 +23,8 @@ public class JavaAgentByBuddy {
     public static void premain(String agentArgs, Instrumentation inst) {
         SharedInformation.fileName = agentArgs;
         try {
-            File newFile = new File(SharedInformation.baseDir + SharedInformation.fileName);
-            if (newFile.createNewFile()) {
-                System.out.println("File created: " + newFile.getName());
-            } else {
-                RandomAccessFile raf = new RandomAccessFile(SharedInformation.baseDir + SharedInformation.fileName, "rw");
-                raf.setLength(0);
-                raf.close();
-            }
+            Files.writeString(Path.of(SharedInformation.baseDir + SharedInformation.fileName)
+                    , "");
         } catch (IOException e) {
             e.printStackTrace();
         }

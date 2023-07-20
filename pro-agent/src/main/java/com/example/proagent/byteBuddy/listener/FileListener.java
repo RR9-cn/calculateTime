@@ -48,19 +48,13 @@ public class FileListener implements Runnable{
                     continue;
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    File file = new File(SharedInformation.baseDir + SharedInformation.fileName);
-                    Scanner reader = null;
+                    Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                     try {
-                        reader = new Scanner(file);
-                    } catch (FileNotFoundException e) {
-                        continue;
+                        String s = Files.readString(path);
+                        ReadFactory.readUI.getTextPane().setText(s);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-                    ReadFactory.readUI.getTextPane().setText("");
-                    while (reader.hasNextLine()) {
-                        String data = reader.nextLine();
-                        appendToPane(ReadFactory.readUI.getTextPane(),data + "\n", StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
-                    }
-                    reader.close();
                 }
             }
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
@@ -68,14 +62,5 @@ public class FileListener implements Runnable{
         }
 
 
-    }
-
-    private static void appendToPane(JTextPane tp, String msg, Style style) {
-        StyledDocument doc = tp.getStyledDocument();
-        try {
-            doc.insertString(doc.getLength(), msg, style);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
     }
 }
