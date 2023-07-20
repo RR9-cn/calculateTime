@@ -1,7 +1,7 @@
 package com.example.proagent.byteBuddy;
 
 import cn.hutool.core.util.StrUtil;
-import com.example.proagent.byteBuddy.listener.MonitorList;
+import com.example.proagent.byteBuddy.listener.FileListener;
 import com.example.proagent.byteBuddy.utils.PluginUtil;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author User
@@ -54,11 +53,13 @@ public class PerRun extends JavaProgramPatcher {
         }
 
         RunConfiguration runConfiguration = (RunConfiguration) configuration;
+        String fileName = runConfiguration.getProject().getName() + ".txt";
+        SharedInformation.fileName = fileName;
         ParametersList vmParametersList = javaParameters.getVMParametersList();
-        vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=testargs");
+        vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=" + fileName);
         vmParametersList.addNotEmptyProperty("guide-idea-plugin-probe.projectId", runConfiguration.getProject().getLocationHash());
         try {
-            new Thread(new MonitorList()).start();
+            new Thread(new FileListener()).start();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

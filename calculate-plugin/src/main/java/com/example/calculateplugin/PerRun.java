@@ -2,7 +2,6 @@ package com.example.calculateplugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.example.calculateplugin.utils.PluginUtil;
-import com.example.proagent.byteBuddy.listener.MonitorList;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.execution.configurations.ParametersList;
@@ -16,7 +15,6 @@ import com.intellij.openapi.projectRoots.Sdk;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author User

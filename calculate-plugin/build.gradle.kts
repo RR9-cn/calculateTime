@@ -11,7 +11,6 @@ repositories {
 }
 dependencies{
     implementation(project(":pro-agent"))
-    implementation(project(":calculate-core"))
     implementation("net.bytebuddy:byte-buddy:1.14.5")
     implementation("net.bytebuddy:byte-buddy-agent:1.14.5")
     implementation("javassist:javassist:3.12.1.GA")
