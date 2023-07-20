@@ -58,10 +58,5 @@ public class PerRun extends JavaProgramPatcher {
         ParametersList vmParametersList = javaParameters.getVMParametersList();
         vmParametersList.addParametersString("-javaagent:" + agentCoreJarPath+"=" + fileName);
         vmParametersList.addNotEmptyProperty("guide-idea-plugin-probe.projectId", runConfiguration.getProject().getLocationHash());
-        try {
-            new Thread(new FileListener()).start();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

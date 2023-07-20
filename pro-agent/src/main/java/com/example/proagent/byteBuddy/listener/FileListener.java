@@ -44,19 +44,23 @@ public class FileListener implements Runnable{
 
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind<?> kind = event.kind();
+                if(kind == StandardWatchEventKinds.ENTRY_DELETE){
+                    continue;
+                }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     File file = new File(SharedInformation.baseDir + SharedInformation.fileName);
                     Scanner reader = null;
                     try {
                         reader = new Scanner(file);
                     } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
+                        continue;
                     }
                     ReadFactory.readUI.getTextPane().setText("");
                     while (reader.hasNextLine()) {
                         String data = reader.nextLine();
                         appendToPane(ReadFactory.readUI.getTextPane(),data + "\n", StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
                     }
+                    reader.close();
                 }
             }
             // 当所有事件都已处理，重置 watch key 以接收下一批事件

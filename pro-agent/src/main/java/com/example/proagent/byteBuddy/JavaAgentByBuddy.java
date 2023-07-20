@@ -7,6 +7,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.lang.instrument.Instrumentation;
 
 
@@ -24,12 +25,13 @@ public class JavaAgentByBuddy {
             if (newFile.createNewFile()) {
                 System.out.println("File created: " + newFile.getName());
             } else {
-                System.out.println("File already exists.");
+                RandomAccessFile raf = new RandomAccessFile(SharedInformation.baseDir + SharedInformation.fileName, "rw");
+                raf.setLength(0);
+                raf.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
                 .type(ElementMatchers.nameStartsWith("com"))
