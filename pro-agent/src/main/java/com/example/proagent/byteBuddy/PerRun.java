@@ -1,7 +1,6 @@
 package com.example.proagent.byteBuddy;
 
 import cn.hutool.core.util.StrUtil;
-import com.example.proagent.byteBuddy.listener.FileListener;
 import com.example.proagent.byteBuddy.utils.PluginUtil;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.JavaParameters;
@@ -13,7 +12,6 @@ import com.intellij.openapi.projectRoots.JavaSdk;
 import com.intellij.openapi.projectRoots.JavaSdkVersion;
 import com.intellij.openapi.projectRoots.Sdk;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,8 +20,6 @@ import java.util.concurrent.ScheduledExecutorService;
  * @author User
  */
 public class PerRun extends JavaProgramPatcher {
-    ScheduledExecutorService service = Executors
-            .newSingleThreadScheduledExecutor();
     @Override
     public void patchJavaParameters(Executor executor, RunProfile configuration, JavaParameters javaParameters) {
 

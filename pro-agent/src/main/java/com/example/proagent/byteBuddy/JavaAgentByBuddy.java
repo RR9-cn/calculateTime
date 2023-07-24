@@ -30,7 +30,7 @@ public class JavaAgentByBuddy {
         }
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
-                .type(ElementMatchers.nameStartsWith("com"))
+                .type(ElementMatchers.nameStartsWith("com.costumor.test.morcoservice"))
                 .transform((builder, type, classLoader, module) ->
                         builder
                                 .method(ElementMatchers.any())

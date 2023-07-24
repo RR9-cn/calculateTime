@@ -5,6 +5,7 @@ import net.bytebuddy.asm.Advice;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -22,12 +23,14 @@ public class MethodCostTime {
     }
 
     @Advice.OnMethodExit
-    public static void exit(@Advice.Enter long start, @Advice.Origin String method) {
+    public static void exit(@Advice.Enter long start, @Advice.Origin Method method) {
         long end = System.nanoTime();
+        String packageName = method.getDeclaringClass().getPackage().getName();
         try {
-            Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-            System.out.println("开始写入文件");
-            Files.writeString(path,method + ":" + end + "\n", StandardOpenOption.APPEND);
+            if(packageName.contains("com.costumor.test.morcoservice")){
+                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
+                Files.writeString(path,packageName + ":" + method.getName() + ":" + (end - start) + "\n", StandardOpenOption.APPEND);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
