@@ -9,14 +9,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author CJJ
@@ -26,7 +25,7 @@ import java.util.Scanner;
 public class FileListener implements Runnable{
     WatchService watcher = FileSystems.getDefault().newWatchService();
 
-    Map<String,String> map = new HashMap<>();
+    Map<String,Stack<String>> map = new HashMap<>();
 
     public FileListener() throws IOException {
         Paths.get(System.getProperty("user.home") + "\\timeLog").register(watcher,
@@ -59,19 +58,29 @@ public class FileListener implements Runnable{
                         for (String datum : data) {
                             String[] split = datum.split(":");
                             String packageName = split[0];
-                            map.put(packageName,datum);
+                            putData(packageName,datum);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-            ReadFactory.readUI.getTextPane().setText("");
+            DefaultMutableTreeNode  root = (DefaultMutableTreeNode) ReadFactory.readUI.getTree().getModel().getRoot();
+            root.removeAllChildren();
             map.keySet().forEach(e -> {
-                String s = map.get(e);
-                appendToPane(ReadFactory.readUI.getTextPane(),
-                        s + "\n", StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
+                DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(e);
+                root.add(defaultMutableTreeNode);
+                Stack<String> stack = map.get(e);
+                while (!stack.empty()){
+                    String pop = stack.pop();
+                    String className = pop.split(":")[1];
+                    DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(className);
+                    DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(pop.split(":")[2] +":" + pop.split(":")[3] );
+                    classNode.add(methodNode);
+                    defaultMutableTreeNode.add(classNode);
+                }
             });
+            ((DefaultTreeModel)ReadFactory.readUI.getTree().getModel()).reload();
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
             key.reset();
         }
@@ -79,12 +88,13 @@ public class FileListener implements Runnable{
 
     }
 
-    private static void appendToPane(JTextPane tp, String msg, Style style) {
-        StyledDocument doc = tp.getStyledDocument();
-        try {
-            doc.insertString(doc.getLength(), msg, style);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
+    private void putData(String packageName,String data) {
+        Stack<String> stack = new Stack();
+        if (map.containsKey(packageName)) {
+            map.get(packageName).add(data);
+        }else {
+            stack.add(data);
+            map.put(packageName,stack);
         }
     }
 }

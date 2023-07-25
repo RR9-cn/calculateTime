@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author CJJ
@@ -25,11 +26,14 @@ public class MethodCostTime {
     @Advice.OnMethodExit
     public static void exit(@Advice.Enter long start, @Advice.Origin Method method) {
         long end = System.nanoTime();
+        String className = method.getDeclaringClass().getName();
         String packageName = method.getDeclaringClass().getPackage().getName();
         try {
-            if(packageName.contains("com.costumor.test.morcoservice")){
+            if(packageName.contains("com.costumor.test.morcoservice") && !method.getName().contains("CGLIB")
+            && !className.contains("CGLIB")){
                 Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                Files.writeString(path,packageName + ":" + method.getName() + ":" + (end - start) + "\n", StandardOpenOption.APPEND);
+                Files.writeString(path,packageName + ":" + className.replace(packageName + ".","") + ":"  + method.getName() + ":" + TimeUnit.MILLISECONDS
+                        .convert((end - start),TimeUnit.NANOSECONDS) + "\n", StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
