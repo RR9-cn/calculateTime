@@ -1,5 +1,6 @@
 package com.example.proagent.byteBuddy.action;
 
+import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.listener.FileListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -8,7 +9,13 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.concurrent.TimeUnit;
 
 public class ReadFactory implements ToolWindowFactory {
     public static TimeWindow readUI = new TimeWindow();
@@ -26,6 +33,18 @@ public class ReadFactory implements ToolWindowFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        readUI.getClear().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
+                try {
+                    Files.writeString(path,"");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
 

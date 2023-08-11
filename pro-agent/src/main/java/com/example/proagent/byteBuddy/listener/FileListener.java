@@ -52,6 +52,7 @@ public class FileListener implements Runnable{
                     continue;
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                    map.clear();
                     Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                     try {
                         List<String> data = Files.readAllLines(path);
@@ -65,7 +66,7 @@ public class FileListener implements Runnable{
                     }
                 }
             }
-            DefaultMutableTreeNode  root = (DefaultMutableTreeNode) ReadFactory.readUI.getTree().getModel().getRoot();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) ReadFactory.readUI.getTree().getModel().getRoot();
             root.removeAllChildren();
             map.keySet().forEach(e -> {
                 DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(e);

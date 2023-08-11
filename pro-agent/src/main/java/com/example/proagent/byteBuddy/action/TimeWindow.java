@@ -6,6 +6,8 @@ public class TimeWindow {
     private JTextPane textPane;
     private JPanel panel;
     private JTree tree1;
+    private JButton clear;
+
     public JTextPane getTextPane() {
         return textPane;
     }
@@ -16,5 +18,9 @@ public class TimeWindow {
 
     public JTree getTree() {
         return tree1;
+    }
+
+    public JButton getClear() {
+        return clear;
     }
 }
