@@ -7,14 +7,22 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import de.sciss.treetable.j.DefaultTreeColumnModel;
+import de.sciss.treetable.j.DefaultTreeTableNode;
+import de.sciss.treetable.j.TreeTable;
+import de.sciss.treetable.j.TreeTableNode;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ReadFactory implements ToolWindowFactory {
@@ -23,9 +31,7 @@ public class ReadFactory implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 获取内容工厂的实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-
-        Content content = contentFactory.createContent(readUI.getPanel(), "", false);
-
+        Content content = contentFactory.createContent(new JScrollPane(ReadFactory.readUI.getTable()), "", false);
         toolWindow.getContentManager().addContent(content);
         System.out.println("start thread");
         try {
@@ -34,17 +40,6 @@ public class ReadFactory implements ToolWindowFactory {
             throw new RuntimeException(e);
         }
 
-        readUI.getClear().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                try {
-                    Files.writeString(path,"");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
     }
 
 

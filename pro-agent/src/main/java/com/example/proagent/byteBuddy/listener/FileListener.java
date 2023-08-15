@@ -2,9 +2,15 @@ package com.example.proagent.byteBuddy.listener;
 
 import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.action.ReadFactory;
+import com.example.proagent.byteBuddy.action.TimeWindow;
 import com.sun.nio.file.SensitivityWatchEventModifier;
+import de.sciss.treetable.j.DefaultTreeColumnModel;
+import de.sciss.treetable.j.DefaultTreeTableNode;
+import de.sciss.treetable.j.TreeTable;
+import de.sciss.treetable.j.TreeTableNode;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleContext;
@@ -24,6 +30,8 @@ import java.util.*;
  */
 public class FileListener implements Runnable{
     WatchService watcher = FileSystems.getDefault().newWatchService();
+
+    List<String> strings = Arrays.asList("packageName", "time", "3");
 
     Map<String,Stack<String>> map = new HashMap<>();
 
@@ -66,22 +74,21 @@ public class FileListener implements Runnable{
                     }
                 }
             }
-            DefaultMutableTreeNode root = (DefaultMutableTreeNode) ReadFactory.readUI.getTree().getModel().getRoot();
+            DefaultTreeTableNode root = ReadFactory.readUI.getRoot();
             root.removeAllChildren();
             map.keySet().forEach(e -> {
-                DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(e);
+                DefaultTreeTableNode defaultMutableTreeNode = new DefaultTreeTableNode(e,"","");
                 root.add(defaultMutableTreeNode);
                 Stack<String> stack = map.get(e);
                 while (!stack.empty()){
                     String pop = stack.pop();
                     String className = pop.split(":")[1];
-                    DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(className);
-                    DefaultMutableTreeNode methodNode = new DefaultMutableTreeNode(pop.split(":")[2] +":" + pop.split(":")[3] );
+                    DefaultTreeTableNode classNode = new DefaultTreeTableNode(className,"", "");
+                    DefaultTreeTableNode methodNode = new DefaultTreeTableNode(pop.split(":")[2], pop.split(":")[3],"" );
                     classNode.add(methodNode);
-                    defaultMutableTreeNode.add(classNode);
+                    defaultMutableTreeNode.add(methodNode);
                 }
             });
-            ((DefaultTreeModel)ReadFactory.readUI.getTree().getModel()).reload();
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
             key.reset();
         }
@@ -98,4 +105,6 @@ public class FileListener implements Runnable{
             map.put(packageName,stack);
         }
     }
+
+
 }

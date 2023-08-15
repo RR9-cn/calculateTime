@@ -23,6 +23,7 @@ dependencies{
     implementation("net.bytebuddy:byte-buddy-agent:1.12.6")
     implementation("javassist:javassist:3.12.1.GA")
     implementation("cn.hutool:hutool-all:5.8.18")
+    implementation(files("lib/TreeTable-1.0-SNAPSHOT.jar"))
 }
 
 tasks {
