@@ -33,8 +33,7 @@ public class MethodCostTime {
             if(packageName.contains("com.costumor.test.morcoservice") && !method.getName().contains("CGLIB")
             && !className.contains("CGLIB") && runTime > 0){
                 Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                Files.writeString(path,packageName + ":" + className.replace(packageName + ".","")
-                        + ":"  + method.getName() + ":" + runTime + "ms" + "\n", StandardOpenOption.APPEND);
+                Files.writeString(path,className + "."  + method.getName() + ":" + runTime + "ms" + "\n", StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

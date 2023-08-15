@@ -3,6 +3,7 @@ package com.example.proagent.byteBuddy.listener;
 import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.action.ReadFactory;
 import com.example.proagent.byteBuddy.action.TimeWindow;
+import com.example.proagent.byteBuddy.utils.TreeRender;
 import com.sun.nio.file.SensitivityWatchEventModifier;
 import de.sciss.treetable.j.DefaultTreeColumnModel;
 import de.sciss.treetable.j.DefaultTreeTableNode;
@@ -60,23 +61,21 @@ public class FileListener implements Runnable{
                     continue;
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    map.clear();
+                    DefaultTreeTableNode root = ReadFactory.readUI.getRoot();
+                    root.removeAllChildren();
                     Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                     try {
                         List<String> data = Files.readAllLines(path);
                         for (String datum : data) {
-                            String[] split = datum.split(":");
-                            String packageName = split[0];
-                            putData(packageName,datum);
+                            TreeRender.render(root,datum);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-            DefaultTreeTableNode root = ReadFactory.readUI.getRoot();
-            root.removeAllChildren();
-            map.keySet().forEach(e -> {
+
+          /*  map.keySet().forEach(e -> {
                 DefaultTreeTableNode defaultMutableTreeNode = new DefaultTreeTableNode(e,"","");
                 root.add(defaultMutableTreeNode);
                 Stack<String> stack = map.get(e);
@@ -88,7 +87,7 @@ public class FileListener implements Runnable{
                     classNode.add(methodNode);
                     defaultMutableTreeNode.add(methodNode);
                 }
-            });
+            });*/
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
             key.reset();
         }

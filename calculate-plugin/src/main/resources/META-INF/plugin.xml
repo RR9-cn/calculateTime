@@ -33,7 +33,7 @@
         <java.programPatcher implementation="com.example.proagent.byteBuddy.PerRun"/>
 
         <!-- 窗体 (IDEA 界面右侧) -->
-        <toolWindow id="Read-Book" secondary="false" anchor="right"
+        <toolWindow id="Time-Log" secondary="false" anchor="right"
                     factoryClass="com.example.proagent.byteBuddy.action.ReadFactory"/>
     </extensions>
 
