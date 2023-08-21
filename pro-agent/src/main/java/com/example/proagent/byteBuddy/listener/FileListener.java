@@ -74,20 +74,6 @@ public class FileListener implements Runnable{
                     }
                 }
             }
-
-          /*  map.keySet().forEach(e -> {
-                DefaultTreeTableNode defaultMutableTreeNode = new DefaultTreeTableNode(e,"","");
-                root.add(defaultMutableTreeNode);
-                Stack<String> stack = map.get(e);
-                while (!stack.empty()){
-                    String pop = stack.pop();
-                    String className = pop.split(":")[1];
-                    DefaultTreeTableNode classNode = new DefaultTreeTableNode(className,"", "");
-                    DefaultTreeTableNode methodNode = new DefaultTreeTableNode(pop.split(":")[2], pop.split(":")[3],"" );
-                    classNode.add(methodNode);
-                    defaultMutableTreeNode.add(methodNode);
-                }
-            });*/
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
             key.reset();
         }
