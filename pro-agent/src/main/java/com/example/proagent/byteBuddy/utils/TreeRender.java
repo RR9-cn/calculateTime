@@ -3,6 +3,7 @@ package com.example.proagent.byteBuddy.utils;
 import de.sciss.treetable.j.DefaultTreeColumnModel;
 import de.sciss.treetable.j.DefaultTreeTableNode;
 import de.sciss.treetable.j.TreeTable;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -43,10 +44,14 @@ public class TreeRender {
     }
 
     public static void render(DefaultTreeTableNode root,String packagePath){
-        generateTree(root,packagePath.split("\\."));
+        if (StringUtils.isEmpty(packagePath)) {
+            return;
+        }
+        String timeStr = packagePath.split(":")[1];
+        generateTree(root,packagePath.split("\\."),timeStr);
     }
 
-    private static void generateTree(DefaultTreeTableNode root, String[] packageList){
+    private static void generateTree(DefaultTreeTableNode root, String[] packageList,String timeStr){
         Queue<DefaultTreeTableNode> queue = new LinkedList<>();
         queue.offer(root);
         int i = 0;
@@ -60,7 +65,7 @@ public class TreeRender {
                     pName.append(".").append(packageList[i + 1]);
                 }
             }
-            DefaultTreeTableNode node = new DefaultTreeTableNode(String.valueOf(pName),"","");
+            DefaultTreeTableNode node = new DefaultTreeTableNode(String.valueOf(pName),timeStr,"");
             poll.add(node);
             if (packageList[i].toString().contains(":")) {
                 String str = String.valueOf(packageList[i]);

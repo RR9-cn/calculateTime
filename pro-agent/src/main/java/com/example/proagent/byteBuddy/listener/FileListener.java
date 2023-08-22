@@ -11,6 +11,7 @@ import de.sciss.treetable.j.TreeTable;
 import de.sciss.treetable.j.TreeTableNode;
 
 import javax.swing.*;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -18,6 +19,7 @@ import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,14 +56,13 @@ public class FileListener implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
+            DefaultTreeTableNode root = ((DefaultTreeTableNode) ReadFactory.readUI.getTable().getAdapter().getRoot());
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind<?> kind = event.kind();
                 if(kind == StandardWatchEventKinds.ENTRY_DELETE){
                     continue;
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    DefaultTreeTableNode root = ReadFactory.readUI.getRoot();
                     root.removeAllChildren();
                     Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                     try {
@@ -74,6 +75,8 @@ public class FileListener implements Runnable{
                     }
                 }
             }
+            TreeModelEvent e = new TreeModelEvent(ReadFactory.readUI.getTable().getTreeModel(), new TreePath(root));
+            ReadFactory.readUI.getTable().getAdapter().treeStructureChanged(e);
             // 当所有事件都已处理，重置 watch key 以接收下一批事件
             key.reset();
         }

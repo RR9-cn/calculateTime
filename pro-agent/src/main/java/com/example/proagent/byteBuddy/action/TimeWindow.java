@@ -12,9 +12,10 @@ import java.util.List;
 public class TimeWindow {
     private JPanel panel;
     private JScrollPane JScrollPane;
-    private DefaultTreeTableNode root = new DefaultTreeTableNode("TimeTree", "","");
-    private List<String> colName = Arrays.asList("Elemement", "RunTime,ms", "TimeRatio,%");
-
+    private static DefaultTreeTableNode root = new DefaultTreeTableNode("TimeTree", "","");
+    private static List<String> colName = Arrays.asList("Elemement", "RunTime,ms", "TimeRatio,%");
+    static DefaultTreeColumnModel defaultTreeColumnModel = new DefaultTreeColumnModel(root, colName);
+    private static TreeTable table = new TreeTable(new DefaultTreeModel(root),defaultTreeColumnModel);
     public JPanel getPanel() {
         return panel;
     }
@@ -24,9 +25,7 @@ public class TimeWindow {
     }
 
     public TreeTable getTable() {
-
-        DefaultTreeColumnModel defaultTreeColumnModel = new DefaultTreeColumnModel(root, colName);
-        return new TreeTable(new DefaultTreeModel(root),defaultTreeColumnModel);
+        return table;
     }
 
     public DefaultTreeTableNode getRoot() {
