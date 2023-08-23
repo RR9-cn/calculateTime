@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,7 +32,12 @@ public class ReadFactory implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 获取内容工厂的实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        Content content = contentFactory.createContent(new JScrollPane(ReadFactory.readUI.getTable()), "", false);
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BorderLayout());
+        JButton jButton = new JButton("清空");
+        jPanel.add(new JScrollPane(ReadFactory.readUI.getTable()),BorderLayout.CENTER);
+        jPanel.add(jButton,BorderLayout.NORTH);
+        Content content = contentFactory.createContent(jPanel, "", false);
         toolWindow.getContentManager().addContent(content);
         System.out.println("start thread");
         try {
@@ -40,6 +46,17 @@ public class ReadFactory implements ToolWindowFactory {
             throw new RuntimeException(e);
         }
 
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
+                try {
+                    Files.writeString(path,"");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
 
