@@ -46,15 +46,12 @@ public class ReadFactory implements ToolWindowFactory {
             throw new RuntimeException(e);
         }
 
-        jButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                try {
-                    Files.writeString(path,"");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        jButton.addActionListener(e -> {
+            Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
+            try {
+                Files.writeString(path,"");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
     }

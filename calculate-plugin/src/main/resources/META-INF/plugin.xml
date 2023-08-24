@@ -35,6 +35,8 @@
         <!-- 窗体 (IDEA 界面右侧) -->
         <toolWindow id="Time-Log" secondary="false" anchor="right"
                     factoryClass="com.example.proagent.byteBuddy.action.ReadFactory"/>
+        <postStartupActivity implementation="com.example.proagent.byteBuddy.MyStartupActivity"/>
+        <applicationConfigurable id="easydoc.common.settings" displayName="TimeLog" instance="com.example.proagent.byteBuddy.ToolsConfiguration"/>
     </extensions>
 
 

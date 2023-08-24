@@ -22,15 +22,18 @@ public class JavaAgentByBuddy {
 
     public static void premain(String agentArgs, Instrumentation inst) {
         SharedInformation.fileName = agentArgs;
+        String packagePath = "com";
         try {
             Files.writeString(Path.of(SharedInformation.baseDir + SharedInformation.fileName)
                     , "");
+            //packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
-                .type(ElementMatchers.nameStartsWith("com.costumor.test.morcoservice"))
+                .type(ElementMatchers.nameStartsWith(packagePath))
                 .transform((builder, type, classLoader, module) ->
                         builder
                                 .method(ElementMatchers.any())
