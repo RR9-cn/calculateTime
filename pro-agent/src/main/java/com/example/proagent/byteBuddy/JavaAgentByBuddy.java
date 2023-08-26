@@ -15,21 +15,23 @@ import java.nio.file.Path;
 
 /**
  * @author CJJ
- * @description TODO
  * @date 2023/6/19 14:07
  */
 public class JavaAgentByBuddy {
 
     public static void premain(String agentArgs, Instrumentation inst) {
         SharedInformation.fileName = agentArgs;
-        String packagePath = "com";
+        String packagePath = "";
         try {
             Files.writeString(Path.of(SharedInformation.baseDir + SharedInformation.fileName)
                     , "");
-            //packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
+            packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (packagePath.isBlank()) {
+            return;
         }
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))

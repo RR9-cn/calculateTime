@@ -3,7 +3,6 @@ package com.example.proagent.byteBuddy.utils;
 import de.sciss.treetable.j.DefaultTreeColumnModel;
 import de.sciss.treetable.j.DefaultTreeTableNode;
 import de.sciss.treetable.j.TreeTable;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -15,12 +14,9 @@ import java.util.List;
  * @author CJJ
  * @date 2023/8/15 14:05
  */
-public class TreeRender {
-
-    private static List<String> colName = Arrays.asList("Elemement", "RunTime,ms", "TimeRatio,%");
+public class TreeRenderUntil {
 
     private static Map<String,DefaultTreeTableNode> map = new HashMap<>();
-
 
     public static void main(String[] args) {
         String path = "com.costumor.test.morcoservice.cache.config.redis.RedisConfig.redisTemplate:80ms";

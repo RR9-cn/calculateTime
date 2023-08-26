@@ -47,7 +47,6 @@ public class PerRun extends JavaProgramPatcher {
         if (StrUtil.isBlank(agentCoreJarPath)) {
             return;
         }
-        System.out.println("asdasdasd");
         RunConfiguration runConfiguration = (RunConfiguration) configuration;
         String fileName = runConfiguration.getProject().getName() + ".txt";
         SharedInformation.fileName = fileName;

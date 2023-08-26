@@ -2,26 +2,13 @@ package com.example.proagent.byteBuddy.listener;
 
 import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.action.ReadFactory;
-import com.example.proagent.byteBuddy.action.TimeWindow;
-import com.example.proagent.byteBuddy.utils.TreeRender;
+import com.example.proagent.byteBuddy.utils.StrUntil;
+import com.example.proagent.byteBuddy.utils.TreeRenderUntil;
 import com.sun.nio.file.SensitivityWatchEventModifier;
-import de.sciss.treetable.j.DefaultTreeColumnModel;
 import de.sciss.treetable.j.DefaultTreeTableNode;
-import de.sciss.treetable.j.TreeTable;
-import de.sciss.treetable.j.TreeTableNode;
 
-import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleContext;
-import javax.swing.text.StyledDocument;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
@@ -67,8 +54,10 @@ public class FileListener implements Runnable{
                     Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                     try {
                         List<String> data = Files.readAllLines(path);
+                        String longestCommonSubstring = StrUntil.getLongestCommonSubstring(data);
                         for (String datum : data) {
-                            TreeRender.render(root,datum);
+                            String replaceRes = datum.replace(longestCommonSubstring, "");
+                            TreeRenderUntil.render(root,replaceRes);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
