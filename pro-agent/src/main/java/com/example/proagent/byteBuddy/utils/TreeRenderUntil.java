@@ -51,11 +51,11 @@ public class TreeRenderUntil {
         Queue<DefaultTreeTableNode> queue = new LinkedList<>();
         queue.offer(root);
         int i = 0;
-        while (!queue.isEmpty() && i < packageList.length - 1) {
+        while (!queue.isEmpty() && i < packageList.length) {
             //取出队列
             DefaultTreeTableNode poll = queue.poll();
             DefaultTreeTableNode node = map.getOrDefault(poll.getValueAt(0) + "."
-                    +packageList[i],new DefaultTreeTableNode(String.valueOf(packageList[i]),timeStr,""));
+                    +packageList[i],new DefaultTreeTableNode(String.valueOf(packageList[i].split(":")[0]),timeStr,""));
             poll.add(node);
             queue.add(node);
             map.put(poll.getValueAt(0) + "."

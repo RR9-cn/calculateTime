@@ -29,8 +29,9 @@ public class MethodCostTime {
         String className = method.getDeclaringClass().getName();
         String packageName = method.getDeclaringClass().getPackage().getName();
         try {
+            String packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
             long runTime = TimeUnit.MILLISECONDS.convert((end - start), TimeUnit.NANOSECONDS);
-            if(packageName.contains("com.costumor.test.morcoservice") && !method.getName().contains("CGLIB")
+            if(packageName.contains(packagePath) && !method.getName().contains("CGLIB")
             && !className.contains("CGLIB") && runTime > 0){
                 Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
                 Files.writeString(path,className + "."  + method.getName() + ":" + runTime + "ms" + "\n", StandardOpenOption.APPEND);
