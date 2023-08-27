@@ -26,8 +26,8 @@ intellij {
 tasks {
   // Set the JVM compatibility versions
   withType<JavaCompile> {
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
     options.encoding = "utf-8"
   }
 

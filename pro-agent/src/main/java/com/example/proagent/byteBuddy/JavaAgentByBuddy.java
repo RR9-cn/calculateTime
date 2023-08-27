@@ -1,16 +1,13 @@
 package com.example.proagent.byteBuddy;
 
 import com.example.proagent.byteBuddy.listener.ActionListener;
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.matcher.ElementMatchers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.instrument.Instrumentation;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Objects;
 
 
 /**
@@ -22,15 +19,10 @@ public class JavaAgentByBuddy {
     public static void premain(String agentArgs, Instrumentation inst) {
         SharedInformation.fileName = agentArgs;
         String packagePath = "";
-        try {
-            Files.writeString(Path.of(SharedInformation.baseDir + SharedInformation.fileName)
-                    , "");
-            packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
+        FilesUtil.writingFile("",SharedInformation.baseDir + SharedInformation.fileName);
+        packagePath = FilesUtil.readFiles(SharedInformation.basePackageDir + SharedInformation.fileName);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (packagePath.isBlank()) {
+        if (Objects.equals(packagePath, "")) {
             return;
         }
         new AgentBuilder.Default()

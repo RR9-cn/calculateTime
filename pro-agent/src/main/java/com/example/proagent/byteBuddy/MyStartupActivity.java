@@ -1,5 +1,6 @@
 package com.example.proagent.byteBuddy;
 
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
 import org.jetbrains.annotations.NotNull;
@@ -17,14 +18,6 @@ public class MyStartupActivity implements StartupActivity {
     public void runActivity(@NotNull Project project) {
         String fileName = project.getName() + ".txt";
         SharedInformation.fileName = fileName;
-        Path path = Path.of(SharedInformation.basePackageDir + SharedInformation.fileName);
-        try {
-        if (!Files.exists(path)) {
-            Files.createDirectories(path.getParent());
-            Files.createFile(path);
-        }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FilesUtil.creteFile(SharedInformation.basePackageDir + SharedInformation.fileName);
     }
 }

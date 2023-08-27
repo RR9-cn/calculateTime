@@ -2,6 +2,7 @@ package com.example.proagent.byteBuddy.listener;
 
 import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.action.ReadFactory;
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 import com.example.proagent.byteBuddy.utils.StrUntil;
 import com.example.proagent.byteBuddy.utils.TreeRenderUntil;
 import com.sun.nio.file.SensitivityWatchEventModifier;
@@ -51,16 +52,11 @@ public class FileListener implements Runnable{
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     root.removeAllChildren();
-                    Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                    try {
-                        List<String> data = Files.readAllLines(path);
-                        String longestCommonSubstring = StrUntil.getLongestCommonSubstring(data);
-                        for (String datum : data) {
-                            String replaceRes = datum.replace(longestCommonSubstring, "");
-                            TreeRenderUntil.render(root,replaceRes);
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    List<String> data = FilesUtil.readFilesLines(SharedInformation.baseDir + SharedInformation.fileName);
+                    String longestCommonSubstring = StrUntil.getLongestCommonSubstring(data);
+                    for (String datum : data) {
+                         String replaceRes = datum.replace(longestCommonSubstring, "");
+                         TreeRenderUntil.render(root,replaceRes);
                     }
                 }
             }

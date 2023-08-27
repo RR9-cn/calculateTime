@@ -1,9 +1,8 @@
 package com.example.proagent.byteBuddy;
 
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 import net.bytebuddy.asm.Advice;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -28,16 +27,12 @@ public class MethodCostTime {
         long end = System.nanoTime();
         String className = method.getDeclaringClass().getName();
         String packageName = method.getDeclaringClass().getPackage().getName();
-        try {
-            String packagePath = Files.readString(Path.of(SharedInformation.basePackageDir + SharedInformation.fileName));
-            long runTime = TimeUnit.MILLISECONDS.convert((end - start), TimeUnit.NANOSECONDS);
-            if(packageName.contains(packagePath) && !method.getName().contains("CGLIB")
+        String packagePath = FilesUtil.readFiles(SharedInformation.basePackageDir + SharedInformation.fileName);
+        long runTime = TimeUnit.MILLISECONDS.convert((end - start), TimeUnit.NANOSECONDS);
+        if(packageName.contains(packagePath) && !method.getName().contains("CGLIB")
             && !className.contains("CGLIB") && runTime > 0){
-                Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-                Files.writeString(path,className + "."  + method.getName() + ":" + runTime + "ms" + "\n", StandardOpenOption.APPEND);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                FilesUtil.writingAppendFile(className + "."  + method.getName() + ":" + runTime + "ms" + "\n",
+                        SharedInformation.baseDir + SharedInformation.fileName);
         }
     }
 }

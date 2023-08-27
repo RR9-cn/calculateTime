@@ -2,6 +2,7 @@ package com.example.proagent.byteBuddy.action;
 
 import com.example.proagent.byteBuddy.SharedInformation;
 import com.example.proagent.byteBuddy.listener.FileListener;
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -39,7 +40,6 @@ public class ReadFactory implements ToolWindowFactory {
         jPanel.add(jButton,BorderLayout.NORTH);
         Content content = contentFactory.createContent(jPanel, "", false);
         toolWindow.getContentManager().addContent(content);
-        System.out.println("start thread");
         try {
             new Thread(new FileListener()).start();
         } catch (IOException e) {
@@ -47,12 +47,7 @@ public class ReadFactory implements ToolWindowFactory {
         }
 
         jButton.addActionListener(e -> {
-            Path path = Path.of(SharedInformation.baseDir + SharedInformation.fileName);
-            try {
-                Files.writeString(path,"");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            FilesUtil.writingFile("",SharedInformation.baseDir + SharedInformation.fileName);
         });
     }
 
