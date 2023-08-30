@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class TreeRenderUntil {
 
-    private static Map<String,DefaultTreeTableNode> map = new HashMap<>();
+    public static Map<String,DefaultTreeTableNode> map = new HashMap<>();
 
     public static void main(String[] args) {
         String path = "com.costumor.test.morcoservice.cache.config.redis.RedisConfig.redisTemplate:80ms";

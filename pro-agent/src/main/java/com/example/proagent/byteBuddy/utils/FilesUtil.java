@@ -13,6 +13,10 @@ import java.util.List;
  */
 public class FilesUtil {
 
+    public static void main(String[] args) {
+        creteFile("C:\\Users\\User\\packagePath\\family-doctor.txt");
+    }
+
     public static List<String> readFilesLines(String path){
         return FileUtil.readLines(path, StandardCharsets.UTF_8);
     }
@@ -32,7 +36,6 @@ public class FilesUtil {
     }
 
     public static void creteFile(String path){
-        File file = new File(path);
-        FileUtil.mkdir(file);
+        FileUtil.touch(path);
     }
 }

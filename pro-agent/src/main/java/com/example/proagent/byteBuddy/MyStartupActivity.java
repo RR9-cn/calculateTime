@@ -19,5 +19,6 @@ public class MyStartupActivity implements StartupActivity {
         String fileName = project.getName() + ".txt";
         SharedInformation.fileName = fileName;
         FilesUtil.creteFile(SharedInformation.basePackageDir + SharedInformation.fileName);
+        FilesUtil.creteFile(SharedInformation.baseDir + SharedInformation.fileName);
     }
 }

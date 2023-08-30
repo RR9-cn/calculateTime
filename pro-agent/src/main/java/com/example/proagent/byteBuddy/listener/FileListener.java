@@ -52,6 +52,7 @@ public class FileListener implements Runnable{
                 }
                 if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     root.removeAllChildren();
+                    TreeRenderUntil.map.clear();
                     List<String> data = FilesUtil.readFilesLines(SharedInformation.baseDir + SharedInformation.fileName);
                     String longestCommonSubstring = StrUntil.getLongestCommonSubstring(data);
                     for (String datum : data) {

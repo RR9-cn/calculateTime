@@ -1,6 +1,7 @@
 package com.example.proagent.byteBuddy.action;
 
 import com.example.proagent.byteBuddy.SharedInformation;
+import com.example.proagent.byteBuddy.utils.FilesUtil;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -34,20 +35,14 @@ public class TimeLogSetting {
     }
 
     public TimeLogSetting() {
-        Path path = Path.of(SharedInformation.basePackageDir + SharedInformation.fileName);
-        try {
-            textField.setText(Files.readString(path));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (SharedInformation.fileName != null) {
+            textField.setText(FilesUtil.readFiles(SharedInformation.basePackageDir + SharedInformation.fileName));
+            Button.addActionListener((e) -> {
+                String text = textField.getText();
+                FilesUtil.writingFile("",SharedInformation.basePackageDir + SharedInformation.fileName);
+                FilesUtil.writingFile(text,SharedInformation.basePackageDir + SharedInformation.fileName);
+            });
         }
-        Button.addActionListener((e) -> {
-            String text = textField.getText();
-            try {
-                Files.writeString(path,"");
-                Files.writeString(path,text);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+
     }
 }
