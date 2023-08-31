@@ -25,8 +25,10 @@ public class JavaAgentByBuddy {
         if (Objects.equals(packagePath, "")) {
             return;
         }
+        System.out.println("包路径："+ packagePath);
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
+                .ignore(ElementMatchers.nameStartsWith("com.qdsgvision.family.doctor.api"))
                 .type(ElementMatchers.nameStartsWith(packagePath))
                 .transform((builder, type, classLoader, module) ->
                         builder
