@@ -11,9 +11,6 @@ repositories {
 }
 dependencies{
     implementation(project(":pro-agent"))
-    implementation("net.bytebuddy:byte-buddy:1.14.5")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.5")
-    implementation("javassist:javassist:3.12.1.GA")
     implementation("cn.hutool:hutool-all:5.8.18")
 }
 // Configure Gradle IntelliJ Plugin
@@ -47,9 +44,4 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 
-    jar{
-        manifest{
-            attributes(mapOf("Premain-Class" to "com.example.calculateplugin.agent.JavaAgentByBuddy"))
-        }
-    }
 }

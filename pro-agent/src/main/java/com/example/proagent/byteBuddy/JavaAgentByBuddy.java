@@ -21,11 +21,10 @@ public class JavaAgentByBuddy {
         String packagePath = "";
         FilesUtil.writingFile("",SharedInformation.baseDir + SharedInformation.fileName);
         packagePath = FilesUtil.readFiles(SharedInformation.basePackageDir + SharedInformation.fileName);
-
+        System.out.println("包名:"+ packagePath);
         if (Objects.equals(packagePath, "")) {
             return;
         }
-        System.out.println("包路径："+ packagePath);
         new AgentBuilder.Default()
                 .ignore(ElementMatchers.nameStartsWith("com.example.proagent.byteBuddy.listener"))
                 .ignore(ElementMatchers.nameStartsWith("com.qdsgvision.family.doctor.api"))

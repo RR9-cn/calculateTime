@@ -10,8 +10,7 @@ repositories {
   mavenCentral()
 }
 dependencies{
-  implementation("net.bytebuddy:byte-buddy:1.14.5")
-  implementation("net.bytebuddy:byte-buddy-agent:1.14.5")
+
 }
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html

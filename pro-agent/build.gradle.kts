@@ -1,8 +1,12 @@
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.12.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
+java {
+    withSourcesJar()
+}
 group = "com.example"
 version = "1.0-SNAPSHOT"
 repositories {
@@ -38,6 +42,7 @@ tasks {
         manifest{
             attributes(mapOf("Premain-Class" to "com.example.proagent.byteBuddy.JavaAgentByBuddy"))
         }
+
     }
     patchPluginXml {
         sinceBuild.set("221")
